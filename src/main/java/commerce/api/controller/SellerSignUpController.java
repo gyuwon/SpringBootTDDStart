@@ -1,5 +1,6 @@
 package commerce.api.controller;
 
+import commerce.Patterns;
 import commerce.Seller;
 import commerce.SellerRepository;
 import commerce.command.CreateSellerCommand;
@@ -15,9 +16,6 @@ public record SellerSignUpController(
     Pbkdf2PasswordEncoder passwordEncoder,
     SellerRepository repository
 ) {
-
-    private static final String EMAIL_REGEX = "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}$";
-    private static final String USERNAME_REGEX = "^[A-Za-z0-9_-]{3,}$";
 
     @PostMapping("/seller/signUp")
     ResponseEntity<?> signUp(@RequestBody CreateSellerCommand command) {
@@ -47,11 +45,11 @@ public record SellerSignUpController(
     }
 
     private static boolean isUsernameValid(String username) {
-        return username != null && username.matches(USERNAME_REGEX);
+        return username != null && username.matches(Patterns.USERNAME_REGEX);
     }
 
     private static boolean isEmailValid(String email) {
-        return email != null && email.matches(EMAIL_REGEX);
+        return email != null && email.matches(Patterns.EMAIL_REGEX);
     }
 
     private static boolean isPasswordValid(String password) {
